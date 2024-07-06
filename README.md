@@ -18,6 +18,11 @@
 
 Расписать задание
 
+<img width="1200" height="300" alt="image" src="https://github.com/NikitaGordievskiy/align-car-plates-beeline/blob/67581fb864aab7405ee32cd875c0931103288471/task_example.png"> 
+
+<br>
+
+
 ## <a name="2">Решение </a>
 
 Расписать про решение
