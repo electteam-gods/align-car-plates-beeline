@@ -22,8 +22,8 @@
 
 Расписать про решение
 
-### Архетиктура модели
-<img width="1200" height="300" alt="image" src=""> 
+### Архетиктура решения
+<img width="1200" height="300" alt="image" src="https://github.com/NikitaGordievskiy/align-car-plates-beeline/blob/ed1ea4b2a1c507c2a81b9aaa4dcc35ba8b682372/arch.png"> 
 
 <br>
 
