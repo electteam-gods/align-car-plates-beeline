@@ -12,7 +12,7 @@
 5. [Масштабируемость](#5)
 6. [Практическая применимость](#6)
 7. [Стек](#7)
-8. [Ссылки](#8)
+8. [Полезные ссылки](#8)
 
 ## <a name="1"> Задание </a>
 
@@ -65,7 +65,7 @@
   <img src="https://github.com/devicons/devicon/blob/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/typescript/typescript-original.svg" title="TypeScript" alt="Puthon" width="40" height="40"/>&nbsp;
   <img src="https://github.com/devicons/devicon/blob/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/rabbitmq/rabbitmq-original-wordmark.svg" title="RabbitMQ" alt="Puthon" width="40" height="40"/>&nbsp;
   <img src="https://github.com/devicons/devicon/blob/6910f0503efdd315c8f9b858234310c06e04d9c0/icons/redis/redis-original-wordmark.svg" title="Redis" alt="Puthon" width="40" height="40"/>&nbsp;
-
+<img src="https://cdn.prod.website-files.com/646dd1f1a3703e451ba81ecc/6499468f33db295c5a1219ec_Ultralytics_mark_blue.svg" title="Ultralytics" alt="Puthon" width="40" height="40"/>&nbsp;
 
 ## <a name="8">Полезные ссылки </a>
 
