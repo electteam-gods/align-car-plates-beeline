@@ -18,6 +18,7 @@
 
 Расписать задание
 
+### Пример решения задачи оцифровки номера автомобиля
 <img width="1300" height="280" alt="image" src="https://github.com/NikitaGordievskiy/align-car-plates-beeline/blob/67581fb864aab7405ee32cd875c0931103288471/task_example.png"> 
 
 <br>
