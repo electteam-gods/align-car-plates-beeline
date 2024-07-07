@@ -1,0 +1,132 @@
+volumes:
+  minio_storage: {}
+
+services:
+  traefik:
+    image: traefik:v3.1
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/etc/traefik/traefik.yml
+    networks:
+      - traefik-network-dev
+
+  frontend:
+    build:
+      context: front
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./front/src:/app/src
+      - ./front/public:/app/public
+    expose:
+      - 3000
+    networks:
+      - traefik-network-dev
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.frontend.entrypoints=web
+      - traefik.http.routers.frontend.service=frontend
+      - traefik.http.routers.frontend.rule=PathPrefix(`/`)
+      - traefik.http.services.frontend.loadbalancer.server.port=3000
+
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile.dev
+    networks:
+      - traefik-network-dev
+    volumes:
+      - ./api/src:/app/src
+    expose:
+      - 8000
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.entrypoints=web
+      - traefik.http.routers.api.service=api
+      - traefik.http.routers.api.rule=PathPrefix(`/api`)
+      - traefik.http.services.api.loadbalancer.server.port=8000
+
+  ai-model:
+    image: oleg36913/lcar_plate_app:v3
+    networks:
+      - traefik-network-dev
+    expose:
+      - 80
+
+  ai-api:
+    build:
+      context: ai-api
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./ai-api/src:/app/src
+    networks:
+      - traefik-network-dev
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+
+  rabbitmq:
+    image: rabbitmq:3.10.7-management
+    hostname: rabbitmq
+    restart: always
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS=-rabbit log_levels [{connection,error},{default,error}] disk_free_limit 2147483648
+    volumes:
+      - ./rabbitmq:/var/lib/rabbitmq
+    networks:
+      - traefik-network-dev
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 30s
+      retries: 3
+    expose:
+      - 5672
+    ports:
+      - 15672:15672
+      # - 5672:5672
+
+  redis:
+    image: redis:latest
+    container_name: redis_container
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_USER=${REDIS_USER}
+      - REDIS_USER_PASSWORD=${REDIS_USER_PASSWORD}
+    networks:
+      - traefik-network-dev
+    volumes:
+      - ./redisdata:/data
+    command: >
+      sh -c '
+        mkdir -p /usr/local/etc/redis &&
+        echo "bind 0.0.0.0" > /usr/local/etc/redis/redis.conf &&
+        echo "requirepass $REDIS_PASSWORD" >> /usr/local/etc/redis/redis.conf &&
+        echo "appendonly yes" >> /usr/local/etc/redis/redis.conf &&
+        echo "appendfsync everysec" >> /usr/local/etc/redis/redis.conf &&
+        echo "user default on nopass ~* +@all" > /usr/local/etc/redis/users.acl &&
+        echo "user $REDIS_USER on >$REDIS_USER_PASSWORD ~* +@all" >> /usr/local/etc/redis/users.acl &&
+        redis-server /usr/local/etc/redis/redis.conf --aclfile /usr/local/etc/redis/users.acl
+      '
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "$REDIS_PASSWORD", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+
+networks:
+  traefik-network-dev:
+    driver: bridge
