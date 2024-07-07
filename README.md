@@ -90,7 +90,7 @@
 - [ссылка на код модели с комментариями]
 - [ссылка на код формирования таблицы ответов на тестовый датасет]
 - [ссылка на скринкаст](https://disk.yandex.ru/d/lcg9v136wceEGw)&nbsp;
-- [ссылка на демо](https://car-plates.electteam.ayarayarovich.ru)&nbsp;
+- [ссылка на демо](http://plates.ellecteam.ayarayarovich.ru)&nbsp;
 
 
 
