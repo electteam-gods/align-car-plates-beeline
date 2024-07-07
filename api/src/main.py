@@ -4,7 +4,7 @@ import pika
 import redis
 from uuid import uuid4
 from task import TaskStatuses
-from requests import request
+import requests
 
 import schemes
 from redisconn import get_redis
@@ -30,12 +30,10 @@ async def process(files: list[UploadFile]):
         region_name="ru-1",
         aws_access_key_id="BLZVPJ5JNCHVJZPR6SU3",
         aws_secret_access_key="1dwymiu3T0y95gQSm3ivnQHnqHqatJPAyZIyqA4p",
-        endpoint_url="https://s3.timeweb.cloud"
+        endpoint_url="https://s3.timeweb.cloud",
     )
 
     results = schemes.ProcessResults(list=[])
-    
-    data = request('post', 'http://ai-model/', data={})
 
     id = str(uuid4())
     # upload to s3
@@ -57,15 +55,16 @@ async def process(files: list[UploadFile]):
         #     body=task.model_dump_json(),
         #     properties=pika.BasicProperties(delivery_mode=pika.DeliveryMode.Persistent),
         # )
+        data = requests.post("http://ai-model", json={"url": task.image_url})
         taskResult = schemes.MQProccessImageResult(
-            task_id=task.task_id, status=TaskStatuses.Accepted.name
+            task_id=task.task_id,
+            status=TaskStatuses.Accepted.name,
+            result_url=data.result_link,
         )
         r = get_redis()
         r.set(task.task_id, taskResult.model_dump_json())
         results.list.append(taskResult)
     return results
-
-
 
 
 @router.get("/result")
