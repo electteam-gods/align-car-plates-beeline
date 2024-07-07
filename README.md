@@ -1,1 +1,2 @@
-# align-car-plates-beeline
+# <p align="center"> ЦИФРОВОЙ ПРОРЫВ: СЕЗОН ИИ </p>
+# <p align="center"> Выравнивание изображений номеров автомобилей </p>
