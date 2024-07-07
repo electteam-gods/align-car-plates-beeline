@@ -50,7 +50,7 @@
 
 ### Архетиктура системы
 
-<img width="1200" height="300" alt="image" src="https://github.com/NikitaGordievskiy/align-car-plates-beeline/blob/ed1ea4b2a1c507c2a81b9aaa4dcc35ba8b682372/arch.png"> 
+<img width="1200" height="300" alt="image" src="https://github.com/NikitaGordievskiy/align-car-plates-beeline/blob/b2538e940c6b62e93547cb9fd7e096e900598efd/system_scheme.png"> 
 
 ## <a name="4">Уникальность нашего решения </a>
 
