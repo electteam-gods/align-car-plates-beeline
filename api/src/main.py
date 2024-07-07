@@ -55,11 +55,11 @@ async def process(files: list[UploadFile]):
         #     body=task.model_dump_json(),
         #     properties=pika.BasicProperties(delivery_mode=pika.DeliveryMode.Persistent),
         # )
-        data = requests.post("http://ai-model", json={"url": task.image_url})
+        data = requests.post("http://ai-model", json={"url": task.image_url}).json()
         taskResult = schemes.MQProccessImageResult(
             task_id=task.task_id,
             status=TaskStatuses.Accepted.name,
-            result_url=data.result_link,
+            result_url=data['result_link'],
         )
         r = get_redis()
         r.set(task.task_id, taskResult.model_dump_json())
