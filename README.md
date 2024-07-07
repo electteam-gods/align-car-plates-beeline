@@ -33,8 +33,7 @@
 
 ### Архетиктура решения
 
-<img width="1200" height="300" alt="image" src="https://github.com/NikitaGordievskiy/align-car-plates-beeline/blob/aa16786319ecbef7a63e088f4b5e95736e0d9a30/model_scheme.png
-"> 
+<img width="1200" height="300" alt="image" src="https://github.com/NikitaGordievskiy/align-car-plates-beeline/blob/aa16786319ecbef7a63e088f4b5e95736e0d9a30/model_scheme.png"> 
 
 ## <a name="3">Практическая применимость </a>
 
